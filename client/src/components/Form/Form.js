@@ -5,7 +5,7 @@ import FileBase from 'react-file-base64';
 import { createPost, updatePost } from '../../actions/posts';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Form = ( {currentId, setCurrentId } ) => {
+const Form = ( { currentId, setCurrentId } ) => {
     const [postData, setPostData] = useState({creator: '', title: '', message: '', tags: '', selectedFile: ''});
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const Form = ( {currentId, setCurrentId } ) => {
                     />
                     <TextField name="tags" variant="outlined" label="Tags" fullWidth
                         value={postData.tags}
-                        onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+                        onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
                     />
                     <div className={classes.fileInput}>
                         <FileBase type="file" multuple={false} onDone={({base64})=>setPostData({...postData, selectedFile: base64})}/>
