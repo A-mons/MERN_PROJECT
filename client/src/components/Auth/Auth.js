@@ -1,13 +1,37 @@
-import React, {useState} from 'react'
-import { Button, Typography, Paper, Grid, Avatar, Container, TextField } from '@material-ui/core'
+import React, { useState } from 'react'
+import {GoogleLogin} from 'react-google-login'
+import { Button, Typography, Paper, Grid, Avatar, Container } from '@material-ui/core'
 import useStyles from './styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import {useDispatch} from 'react-redux'
 import Input from './Input'
+import Icon from './icon'
+import { useHistory } from 'react-router-dom';
 
 const Auth = () => {
     const classes = useStyles();
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    
+    const googleSucess = async (res) => {
+        
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+        
+        try {
+            dispatch({ type: 'AUTH', data: { result, token } });
+            history.push('/');
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
+    const googleFailure = (error) => {
+        console.log('Unsuccessful Google Sign In !')
+        console.log(error);
+    }
 
     const handleSubmit = () => {
         
@@ -42,6 +66,17 @@ const Auth = () => {
                     <Button className={classes.submit} type="submit" variant="contained" color="primary" fullWidth >
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
+                    <GoogleLogin
+                        clientId="GOOGLE_ID"
+                        render={(renderProps) => (
+                            <Button className= {classes.googleButton} color='secondary' variant='contained' onClick={renderProps.onClick}  disabled={renderProps.disabled} startIcon={<Icon />} fullWidth >
+                                Google Sign In
+                            </Button>
+                        )}
+                        onSuccess={googleSucess}
+                        onFailure={googleFailure}
+                        cookiePolicy="single_host_origin"
+                    />
                     <Grid container justify='flex-end'>
                         <Grid item>
                             <Button onClick={signMode} >
