@@ -7,6 +7,9 @@ import {useDispatch} from 'react-redux'
 import Input from './Input'
 import Icon from './icon'
 import { useHistory } from 'react-router-dom';
+import { signin, signup } from '../../actions/auth';
+
+const initialState = { firstName: '', lastName: '', email: '', password: '', passwordConfirmation: '' };
 
 const Auth = () => {
     const classes = useStyles();
@@ -14,6 +17,7 @@ const Auth = () => {
     const [isSignup, setIsSignup] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
+    const [formData, setFormData] = useState(initialState);
     
     const googleSucess = async (res) => {
         
@@ -33,11 +37,16 @@ const Auth = () => {
         console.log(error);
     }
 
-    const handleSubmit = () => {
-        
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isSignup) {
+            dispatch(signup(formData, history));
+        } else {
+            dispatch(signin(formData, history));
+        }
     };
-    const handleChange = () => {
-        
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name ]: e.target.value });
     };
     const handleShowPassword = () => setShowPassword(() => !showPassword);
     const signMode = () => setIsSignup(() => !isSignup);
@@ -61,7 +70,7 @@ const Auth = () => {
                         }
                         <Input name="email" label="Email Address" type="email" handleChange={handleChange} />
                         <Input name="password" label="Password" type={showPassword ? "text" : "password"} handleChange={handleChange} handleShowPassword={handleShowPassword} />
-                        { isSignup && <Input name="PasswordConfirmation" label="Confirm Password" type="password" handleChange={handleChange} /> }
+                        { isSignup && <Input name="passwordConfirmation" label="Confirm Password" type="password" handleChange={handleChange} /> }
                     </Grid>
                     <Button className={classes.submit} type="submit" variant="contained" color="primary" fullWidth >
                         {isSignup ? 'Sign Up' : 'Sign In'}
