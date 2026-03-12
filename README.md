@@ -1,144 +1,154 @@
-# MemoShare - MERN Stack Application
+<p align="center">
+  <h1 align="center">📸 MemoShare</h1>
+  <p align="center">A social platform for sharing memories — built with the MERN stack.</p>
+</p>
 
-MemoShare is a full-stack web application for sharing memories (posts) built with the MERN stack (MongoDB, Express.js, React, Node.js). It allows users to create, edit, delete, and like posts with complete authentication.
-
-## ✨ Features
-
-- **User Authentication** - Secure registration and login
-- **Full CRUD Operations** - Create, read, update, and delete posts
-- **Like System** - Interaction with publications
-- **Image Upload** - Base64 image uploading
-- **Responsive Interface** - Adaptive design with Material-UI
-- **Google OAuth** - Login with Google account
-- **Tags** - Post categorization with hashtags
-  
-## 🛠️ Technologies Used
-
-### Frontend
-- **React** - JavaScript framework
-- **Redux** - State management
-- **Material-UI** - UI components
-- **Axios** - HTTP requests
-- **React Router** - Navigation
-- **Moment.js** - Date formatting
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB ODM
-- **JWT** - Token authentication
-- **bcryptjs** - Password hashing
-- **CORS** - Cross-origin request handling
-
-
-## 🚀 Installation & Deployment
-
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local or Atlas)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone <your-repo>
-cd MemoShare 
-   ```
-2. **Install backend dependencies**
-   
-   ```bash
-     cd server
-     npm install
-   ```
-3. **Install frontend dependencies**
-   
-   ```bash
-      cd ../client
-      npm install
-   ```
-4. **Environment configuration**
-   
-     Create a ```env``` file in the ```server/``` directory:
-   
-   ```bash
-      CONNECTION_URL=votre_uri_mongodb
-      PORT=PORT
-      JWT_SECRET=votre_secret_jwt
-   ```
-5. **Start the application**
-   
-   ```bash
-      # Terminal 1 - Backend
-      cd server
-      npm start
-
-      # Terminal 2 - Frontend
-      cd client
-      npm start
-   ```
-## 📡 API Endpoints
-
-### Posts
-- `GET /posts` - Get all posts
-- `POST /posts` - Create new post
-- `PATCH /posts/:id` - Update post
-- `DELETE /posts/:id` - Delete post
-- `PATCH /posts/:id/likePost` - Like post
-
-### Authentication
-- `POST /user/signin` - User login
-- `POST /user/signup` - User registration
-
-## 🔧 Google OAuth Configuration
-
-1. Go to Google Cloud Console
-2. Create a new project or select existing one
-3. Enable Google+ API
-4. Create OAuth 2.0 credentials
-5. Add  `http://localhost:3000` to authorized redirect URIs
-6. Replace  `GOOGLE_ID` in  `client/src/components/Auth/Auth.js` with your client ID
-
-## 🎨 Customization
-
-### Modify colors
-Edit the Material-UI theme in style files.
-
-### Modify functionality
-- **Posts** : Modify  `server/models/postMessage.js` and  `client/src/components/Form/Form.js`
-- **Authentication** : Modify `server/models/user.js` and `server/controllers/users.js`
-- **Styles** : Modify files in `styles.js` directories.
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **MongoDB Connection Error**
-   - Check your URI in the `.env` file.
-   - Ensure MongoDB is running
-
-2. **CORS Errors**
-   - Verify the proxy in `client/package.json` points to the correct port
-
-3. **Dependency Issues**
-   - Delete  `node_modules` and `package-lock.json` and reinstall dependencies
-
-
-## 🤝 Contribution
-
-Contributions are welcome! Feel free to :
-1. Fork the project
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-   
-## 📞 Support
-
-For any questions or issues, please open an issue on the GitHub repository.
+<p align="center">
+  <img src="https://img.shields.io/badge/React-17.0.1-61DAFB?logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/Auth-JWT%20%2B%20Google%20OAuth-FF6B6B" />
+</p>
 
 ---
 
+## Overview
 
+MemoShare lets users create, share, and interact with memory posts. Each post can include a title, message, tags, and an image. Users can like and manage their own posts with full CRUD operations.
 
+Built as a full-stack MERN application with JWT authentication and Google OAuth support.
+
+## ✨ Features
+
+- **Authentication** — Register/login with email & password, or sign in with Google OAuth
+- **Create Posts** — Share memories with title, message, tags, and image upload (Base64)
+- **Edit & Delete** — Full control over your own posts
+- **Like System** — Interact with other users' memories
+- **Tag Filtering** — Categorize posts with hashtags
+- **Responsive Design** — Material-UI components that adapt to any screen size
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 17, Redux, React Router v5, Material-UI, Axios |
+| **Backend** | Node.js, Express.js, Mongoose |
+| **Database** | MongoDB (Atlas or local) |
+| **Auth** | JWT tokens, bcryptjs, Google OAuth 2.0 |
+| **Utilities** | Moment.js, react-file-base64 |
+
+## 📁 Project Structure
+
+```
+MERN_PROJECT/
+├── client/                     # React frontend
+│   ├── src/
+│   │   ├── actions/            # Redux action creators
+│   │   │   ├── auth.js         # Auth actions (signin, signup)
+│   │   │   └── posts.js        # Post CRUD actions
+│   │   ├── api/                # Axios API configuration
+│   │   ├── components/
+│   │   │   ├── Auth/           # Login & registration forms
+│   │   │   ├── Form/           # Post creation/editing form
+│   │   │   ├── Home/           # Home page layout
+│   │   │   ├── Navbar/         # Navigation bar
+│   │   │   └── Posts/          # Post list & individual cards
+│   │   ├── constants/          # Redux action types
+│   │   ├── images/             # Static assets
+│   │   └── reducers/           # Redux reducers
+│   └── package.json
+│
+├── server/                     # Express backend
+│   ├── controllers/
+│   │   ├── posts.js            # Post CRUD logic
+│   │   └── users.js            # Auth logic
+│   ├── models/
+│   │   ├── postMessage.js      # Post schema
+│   │   └── user.js             # User schema
+│   ├── routes/
+│   │   ├── posts.js            # Post endpoints
+│   │   └── users.js            # Auth endpoints
+│   ├── .env.example            # Environment template
+│   └── index.js                # Server entry point
+│
+└── README.md
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** v14+
+- **MongoDB** — local instance or [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
+- **npm** or **yarn**
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/A-mons/MERN_PROJECT.git
+cd MERN_PROJECT
+
+# Install backend dependencies
+cd server
+npm install
+
+# Install frontend dependencies
+cd ../client
+npm install
+```
+
+### Configuration
+
+Create a `.env` file in the `server/` directory:
+
+```env
+CONNECTION_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/memoshare
+PORT=5000
+JWT_SECRET=your_jwt_secret_here
+```
+
+### Run the Application
+
+```bash
+# Terminal 1 — Start the backend
+cd server
+npm start
+
+# Terminal 2 — Start the frontend
+cd client
+npm start
+```
+
+The frontend runs on `http://localhost:3000` and proxies API requests to `http://localhost:5000`.
+
+## 📡 API Reference
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/user/signin` | Login with email & password |
+| `POST` | `/user/signup` | Register a new account |
+
+### Posts
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/posts` | Retrieve all posts |
+| `POST` | `/posts` | Create a new post (auth required) |
+| `PATCH` | `/posts/:id` | Update a post (auth required) |
+| `DELETE` | `/posts/:id` | Delete a post (auth required) |
+| `PATCH` | `/posts/:id/likePost` | Like/unlike a post (auth required) |
+
+## 🔐 Google OAuth Setup
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a project and enable the **Google+ API**
+3. Create **OAuth 2.0** credentials
+4. Add `http://localhost:3000` as an authorized redirect URI
+5. Replace `GOOGLE_ID` in `client/src/components/Auth/Auth.js` with your Client ID
+
+## 📄 License
+
+This project is open source and available under the [ISC License](LICENSE).
